@@ -1,0 +1,35 @@
+[project]
+name = "chess_game_poc"
+version = "0.0.1"
+authors = [
+  { name="James Andrew Lawlor"},
+]
+description = "POC for chess game"
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/jameslawlor/chess-game-poc"
+Issues = "https://github.com/jameslawlor/chess-game-poc/issues"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/chess_game_poc"]
+
+[tool.pytest.ini_options]
+pythonpath = "src"
+addopts = [
+    "--import-mode=importlib",
+]
+
+[tool.black]
+line-length = 88
+target-version = ['py39', 'py310', 'py311', 'py312']
