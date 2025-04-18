@@ -16,27 +16,33 @@ class CustomChessBoard(chess.Board):
         super().__init__(fen=fen, chess960=chess960)
         self.rook_teleport_available = True
         self.pending_second_move = False
+        self.double_move_active = False  # Track if double move is active
 
-    def is_legal(self, move: chess.Move) -> bool:
-        # Allow standard legal moves
-        if super().is_legal(move):
-            return True
+    def enable_double_move(self):
+        """Enable the double move mechanic."""
+        self.pending_second_move = True
+        self.double_move_active = True
 
-        # Allow a one-time rook teleport (any rook to any empty square)
-        if self.rook_teleport_available:
-            piece = self.piece_at(move.from_square)
-            if piece and piece.piece_type == chess.ROOK and self.is_empty(move.to_square):
-                return True
+    def disable_double_move(self):
+        """Disable the double move mechanic."""
+        self.pending_second_move = False
+        self.double_move_active = False
 
-        return False
+
+    # @property
+    # def legal_moves(self):
+    #     """Override legal_moves to allow the same player to move twice."""
+    #     if self.double_move_active and self.pending_second_move:
+    #         # Temporarily allow moves for the same color
+    #         return self.generate_legal_moves(turn=self.turn)
+    #     return super().legal_moves
 
     def push(self, move: chess.Move) -> None:
-        # If this is a rook teleport move, consume the power
-        if not super().is_legal(move):
-            piece = self.piece_at(move.from_square)
-            if self.rook_teleport_available and piece and piece.piece_type == chess.ROOK:
-                self.rook_teleport_available = False
+        """Push a move onto the board, handling double move logic."""
+        if self.double_move_active and not self.pending_second_move:
+            # Temporarily bypass turn enforcement for the second move
+            self.turn = not self.turn
         super().push(move)
-
-    def is_empty(self, square: chess.Square) -> bool:
-        return self.piece_at(square) is None
+        # if self.pending_second_move:
+        #     self.pending_second_move = False  # Consume the double move
+        #     self.double_move_active = False  # Reset double move state
