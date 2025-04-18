@@ -49,6 +49,7 @@ def handle_second_move(board):
     """Handle the player's second move when Double Move is active."""
     print("Double Move activated! Make your second move.")
     second_move_input = input("\nYour second move: ").strip()
+    board.push(chess.Move.null()) # pass the computer's turn
     if handle_player_move(board, second_move_input):
         board.disable_double_move()  # Disable the double move after use
         return True
@@ -81,13 +82,9 @@ async def play_game():
     # Start the chess engine
     await engine.start()
 
-
-    #TODO: Double move is not working, debug this
-    # Activate it by default to save time:
-    handle_power_activation(player, board, "Double Move")
-
     try:
         while not board.is_game_over():
+            
             # Player's turn
             move_input = input("\nYour move: ").strip()
             if move_input.lower() == "quit":
