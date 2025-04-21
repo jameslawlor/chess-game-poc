@@ -82,6 +82,12 @@ async def play_game():
     # Start the chess engine
     await engine.start()
 
+    input_difficulty = input("\nSet difficulty (ELO): ").strip()
+    if not input_difficulty or int(input_difficulty) < 1320 or int(input_difficulty) > 3190:
+        print("Invalid ELO. Setting to default (1600).")
+        input_difficulty = "1600"
+    await engine.set_difficulty(int(input_difficulty))
+
     try:
         while not board.is_game_over():
             
