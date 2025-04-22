@@ -1,4 +1,4 @@
-name: tbm_gfs
+name: chess_game_poc
 
 on: 
   push: 
