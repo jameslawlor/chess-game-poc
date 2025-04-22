@@ -7,16 +7,28 @@ from chess_game_poc.utils import print_board_pretty, display_welcome_message
 
 
 def handle_player_move(board, move_input):
-    try:
-        move = chess.Move.from_uci(move_input)
-        if move not in board.legal_moves:
-            raise ValueError("Illegal move.")
-        board.push(move)
-        print("\nYour move:", move_input)
-        print_board_pretty(board)
+    if move_input.lower() == "teleport":
+        print("Teleport move activated!")
+        source_square = input("Enter the source square (e.g., a1): ").strip()
+        target_square = input("Enter the target square (e.g., d4): ").strip()
+        try:
+            board.teleport_rook(source_square, target_square)
+            print_board_pretty(board)
+        except ValueError as e:
+            print(f"Error: {e}")
 
-    except ValueError as e:
-        print(f"Invalid move: {e}")
+    else:
+        try:
+            move = chess.Move.from_uci(move_input)
+
+            if move not in board.legal_moves:
+                raise ValueError("Illegal move.")
+
+            board.push(move)
+            print_board_pretty(board)
+
+        except ValueError as e:
+            print(f"Invalid move: {e}")
 
 
 async def handle_computer_move(engine, board):
