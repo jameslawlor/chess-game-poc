@@ -10,6 +10,7 @@ pillow==11.2.1
 pyparsing==3.2.3
 python-chess==1.999
 python-dateutil==2.9.0.post0
+ruff==0.11.6
 six==1.17.0
 stockfish==3.28.0
 asyncio==3.4.3
