@@ -1,6 +1,5 @@
 import chess
 import chess.engine
-import matplotlib.pyplot as plt
 from chess_game_poc.utils import print_board_pretty
 
 
