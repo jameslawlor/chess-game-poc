@@ -1,5 +1,8 @@
 # todo list
 
 * Allow player to be black or white
-* Add rook teleport feature
-* Setting opponent difficulty
+* Non-standard board setups
+* Create named opponents 
+* Undo move
+* Get best engine move
+* Confuse computer into playing random move
