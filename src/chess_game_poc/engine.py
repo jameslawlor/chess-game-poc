@@ -1,6 +1,6 @@
 import chess.engine
-import asyncio
-from chess_game_poc.constants import STOCKFISH_PATH, MAX_ENGINE_ELO
+from chess_game_poc.constants import STOCKFISH_PATH
+
 
 class Engine:
     def __init__(self, path=STOCKFISH_PATH):
@@ -10,13 +10,12 @@ class Engine:
         self.limit_strength = False
         self.elo = None
 
-    async def start(self, elo:int = None):
+    async def start(self, elo: int = None):
         """Start the chess engine asynchronously."""
         self.transport, self.engine = await chess.engine.popen_uci(self.path)
 
         if elo:
             await self.set_difficulty(elo)
-
 
     async def set_difficulty_with_player_input(self):
         input_difficulty = input("\nSet difficulty (ELO): ").strip()
@@ -24,10 +23,10 @@ class Engine:
             not input_difficulty
             or int(input_difficulty) < 1320
             or int(input_difficulty) > 3190
-            ):
-                print("Invalid ELO. Setting to default (1600).")
-                input_difficulty = "1600"
-        
+        ):
+            print("Invalid ELO. Setting to default (1600).")
+            input_difficulty = "1600"
+
         await self.set_difficulty(int(input_difficulty))
 
     async def set_difficulty(self, elo: int):
