@@ -4,10 +4,21 @@ from chess_game_poc.engine import Engine
 from chess_game_poc.player import Player
 from chess_game_poc.boards import CustomChessBoard
 from chess_game_poc.utils import print_board_pretty, display_welcome_message
+from chess_game_poc.constants import MAX_ENGINE_ELO
 
+async def get_engine_move(board):
+    tmp_engine = Engine()
+    await tmp_engine.start(MAX_ENGINE_ELO)
+    move = await tmp_engine.get_move(board)
+    print("\nEngine suggests the move:", move)
+    await tmp_engine.quit()
 
-def handle_player_move(board, move_input):
-    if move_input.lower() == "teleport":
+async def handle_player_move(board, move_input):
+
+    if move_input.lower() == "get_engine_move":
+        print("Getting engine move...")
+        await get_engine_move(board)
+    elif move_input.lower() == "teleport":
         print("Teleport move activated!")
         source_square = input("Enter the source square (e.g., a1): ").strip()
         target_square = input("Enter the target square (e.g., d4): ").strip()
@@ -51,6 +62,7 @@ async def play_game():
 
     # Start the chess engine
     await engine.start()
+    await engine.set_difficulty_with_player_input()
 
     try:
         while not board.is_game_over():
@@ -61,7 +73,7 @@ async def play_game():
                     print("Thanks for playing!")
                     break
 
-                handle_player_move(board, move_input)
+                await handle_player_move(board, move_input)
 
             else:
                 # Computer's turn
