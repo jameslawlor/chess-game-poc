@@ -35,4 +35,6 @@ class CustomChessBoard(chess.Board):
         self.remove_piece_at(source_square_parsed)
         self.set_piece_at(target_square_parsed, piece)
 
-        self.push(chess.Move.null())  # trick the engine into thinking a move was made
+        self.push(
+            chess.Move.null()
+        )  # trick the engine into thinking a normal move was made

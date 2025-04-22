@@ -1,10 +1,10 @@
 import asyncio
 import chess
 from chess_game_poc.engine import Engine
-from chess_game_poc.player import Player
 from chess_game_poc.boards import CustomChessBoard
 from chess_game_poc.utils import print_board_pretty, display_welcome_message
 from chess_game_poc.constants import MAX_ENGINE_ELO
+
 
 async def get_engine_move(board):
     tmp_engine = Engine()
@@ -13,8 +13,8 @@ async def get_engine_move(board):
     print("\nEngine suggests the move:", move)
     await tmp_engine.quit()
 
-async def handle_player_move(board, move_input):
 
+async def handle_player_move(board, move_input):
     if move_input.lower() == "get_engine_move":
         print("Getting engine move...")
         await get_engine_move(board)
@@ -51,16 +51,13 @@ async def handle_computer_move(engine, board):
 
 
 async def play_game():
-    # Initialize the board, player, and engine
+
     board = CustomChessBoard()
-    player = Player()
     engine = Engine()
 
-    # Display welcome message and initial board
     display_welcome_message()
     print_board_pretty(board)
 
-    # Start the chess engine
     await engine.start()
     await engine.set_difficulty_with_player_input()
 
