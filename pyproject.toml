@@ -29,6 +29,9 @@ pythonpath = "src"
 addopts = [
     "--import-mode=importlib",
 ]
+markers = [
+    "asyncio: mark a test as asyncio-based",
+]
 
 [tool.black]
 line-length = 88
