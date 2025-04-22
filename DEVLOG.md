@@ -1,3 +1,6 @@
+# 2025-04-22
+* Heavy refactor to remove and simplify powers logic. Need to rethink implementation. This reverts main branch game to a "default" chess game state with normal rules etc.  
+
 # 2025-04-18
 * Add classes for player and powers
 

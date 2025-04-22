@@ -34,7 +34,6 @@ board.push(result["pv"][0])
 print_board_pretty(board)
 
 while not board.is_game_over():
-
     print_board_pretty(board)
 
     try:
@@ -53,7 +52,7 @@ while not board.is_game_over():
 
     print_board_pretty(board)
     result = engine.analyse(board, chess.engine.Limit(time=1.0))
-    move=result["pv"][0]
+    move = result["pv"][0]
     print(f"Stockfish plays: {board.san(move)}")
     board.push(move)
 
